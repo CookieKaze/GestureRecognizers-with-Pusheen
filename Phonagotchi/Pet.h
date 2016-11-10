@@ -8,7 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum catMood {
+    Bored,
+    Grumpy,
+    Sleepy
+} catMood;
+
+@protocol catViewRules <NSObject>
+-(void) updateCatMood: (NSString *) newMood;
+@end
+
 @interface Pet : NSObject
 
--(NSString *) onPet: (CGPoint) velocity;
+@property catMood catMood;
+@property id <catViewRules> catViewDelegate;
+
+-(NSString *) onPet: (float) magnitude;
+-(NSString *) getMood;
 @end

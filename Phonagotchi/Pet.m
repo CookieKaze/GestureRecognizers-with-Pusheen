@@ -10,16 +10,45 @@
 
 @implementation Pet
 
--(NSString *) onPet: (CGPoint) velocity {
-    NSString * imageName;
-    if ((velocity.x > 300 || velocity.x < -300) || (velocity.y > 300 || velocity.y < -300)) {
-        imageName = @"grumpy.png";
-        //NSLog(@"FAST: %f.2", velocity.x);
-    }else{
-        imageName = @"default.png";
-        //NSLog(@"SLOW: %f.2", velocity.x);
+
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _catMood = Sleepy;
     }
-    return imageName;
+    return self;
+}
+
+-(NSString *) getMood {
+    NSString * newMood = @"Sleepy";
+    switch (self.catMood) {
+        case 0:
+            newMood = @"Bored";
+            break;
+        case 1:
+            newMood = @"Grumpy";
+            break;
+        case 2:
+            newMood = @"Sleepy";
+            break;
+        default:
+            break;
+    }
+    return newMood;
+}
+
+-(NSString *) onPet: (float) magnitude {
+    if (magnitude > 500) {
+        self.catMood = Grumpy;
+        [self.catViewDelegate updateCatMood:[self getMood]];
+    }else if (magnitude == 0) {
+        self.catMood = Bored;
+        [self.catViewDelegate updateCatMood:[self getMood]];
+    }
+    return [self getMood];
 }
 
 @end

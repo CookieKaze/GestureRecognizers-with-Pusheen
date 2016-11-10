@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,16 +15,57 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bucket.png" translatesAutoresizingMaskIntoConstraints="NO" id="1kp-r3-lTk">
+                                <rect key="frame" x="-19" y="391" width="163" height="105"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="163" id="c23-Ym-gUR"/>
+                                    <constraint firstAttribute="height" constant="105" id="fFO-tp-y1U"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mood" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wpg-Hy-5Mb">
+                                <rect key="frame" x="176" y="444" width="136" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="136" id="XLh-Eg-tnl"/>
+                                    <constraint firstAttribute="height" constant="21" id="qMG-Cd-zcD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="apple.png" translatesAutoresizingMaskIntoConstraints="NO" id="Gly-KB-Y8W">
+                                <rect key="frame" x="14" y="356" width="99" height="109"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="99" id="JVe-i3-lYe"/>
+                                    <constraint firstAttribute="height" constant="109" id="Mk8-gn-JPB"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1kp-r3-lTk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-35" id="APC-GT-OJG"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Gly-KB-Y8W" secondAttribute="bottom" constant="15" id="KRz-KT-zZr"/>
+                            <constraint firstItem="Gly-KB-Y8W" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-2" id="hS1-AR-Aq2"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Wpg-Hy-5Mb" secondAttribute="bottom" constant="15" id="iyC-NI-mDS"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="1kp-r3-lTk" secondAttribute="bottom" constant="-16" id="pRe-9L-Dar"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Wpg-Hy-5Mb" secondAttribute="trailing" constant="-8" id="zO3-Lp-evi"/>
+                        </constraints>
                     </view>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="moodLabel" destination="Wpg-Hy-5Mb" id="gab-Gx-a3V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="304.5" y="348.5"/>
+            <point key="canvasLocation" x="304" y="348"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="apple.png" width="515" height="576"/>
+        <image name="bucket.png" width="273" height="297"/>
+    </resources>
 </document>
