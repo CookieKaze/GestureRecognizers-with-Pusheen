@@ -11,8 +11,13 @@
 
 @interface LPGViewController ()
 @property (nonatomic) UIImageView *petImageView;
+@property (nonatomic) UIImageView *basketView;
 @property (strong, nonatomic) UIPanGestureRecognizer * panGestureRecognizer;
+@property (strong, nonatomic) UIPanGestureRecognizer * panGestureRecognizerApple;
+@property (strong, nonatomic) UIPinchGestureRecognizer * pinchGestureRecognizer;
 @property (strong, nonatomic) Pet * petModel;
+@property (nonatomic) UIImageView *apple;
+
 @end
 
 @implementation LPGViewController
@@ -58,30 +63,135 @@
                                                              toItem:self.view
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1
-                                                           constant:30]];
+                                                           constant:-30]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:basketView
                                                           attribute:NSLayoutAttributeRight
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self.view
                                                           attribute:NSLayoutAttributeRight
                                                          multiplier:1
-                                                           constant:30]];
+                                                           constant:-30]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:basketView
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1
+                                                           constant:80]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:basketView
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1
+                                                           constant:80]];
+    basketView.userInteractionEnabled = YES;
+    self.basketView = basketView;
     
-    [self.view addConstraint:[NSLayoutConstraint ]];
+    
+    UIImageView * appleView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    appleView.translatesAutoresizingMaskIntoConstraints = NO;
+    appleView.image = [UIImage imageNamed:@"apple.png"];
+    [self.view addSubview: appleView];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleView
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1
+                                                           constant:-52]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleView
+                                                          attribute:NSLayoutAttributeRight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeRight
+                                                         multiplier:1
+                                                           constant:-65]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleView
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1
+                                                           constant:35]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleView
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1
+                                                           constant:35]];
+    
     //Gestures List
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPet)];
     [self.view addGestureRecognizer:self.panGestureRecognizer];
-    self.petImageView.image = [UIImage imageNamed:@"default"];
+    self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onApplePinch)];
+    [self.basketView addGestureRecognizer:self.pinchGestureRecognizer];
+    self.panGestureRecognizerApple = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onAppleMove)];
+    [self.view addGestureRecognizer:self.panGestureRecognizerApple];
+    
     
     
 }
 
 -(void)onPet {
     CGPoint velocity = [self.panGestureRecognizer velocityInView:self.view];
-//    NSLog(@"%@", [NSString stringWithFormat:@"Horizontal Velocity: %.2f points/sec", velocity.x]);
-//    NSLog(@"%@", [NSString stringWithFormat:@"Vertical Velocity: %.2f points/sec", velocity.y]);
     NSString * imageName = [self.petModel onPet:velocity];
     self.petImageView.image = [UIImage imageNamed:imageName];
+    if (self.panGestureRecognizer.state == 3) {
+        self.petImageView.image = [UIImage imageNamed:@"default.png"];
+    }
 }
 
+-(void)onApplePinch {
+    if (self.pinchGestureRecognizer.state == 3) {
+        UIImageView * appleViewNew = [[UIImageView alloc] initWithFrame:CGRectZero];
+        appleViewNew.translatesAutoresizingMaskIntoConstraints = NO;
+        appleViewNew.image = [UIImage imageNamed:@"apple.png"];
+        [self.view addSubview: appleViewNew];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleViewNew
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1
+                                                               constant:0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleViewNew
+                                                              attribute:NSLayoutAttributeRight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeRight
+                                                             multiplier:1
+                                                               constant:-65]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleViewNew
+                                                              attribute:NSLayoutAttributeWidth
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:nil
+                                                              attribute:NSLayoutAttributeNotAnAttribute
+                                                             multiplier:1
+                                                               constant:35]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleViewNew
+                                                              attribute:NSLayoutAttributeHeight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:nil
+                                                              attribute:NSLayoutAttributeNotAnAttribute
+                                                             multiplier:1
+                                                               constant:35]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:appleViewNew
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1
+                                                               constant:0]];
+        self.apple = appleViewNew;
+    }
+}
+
+-(void)onAppleMove{
+    CGPoint touchLocation = [self.panGestureRecognizerApple locationInView:self.view];
+    self.apple.center = touchLocation;
+    
+    
+}
 @end
