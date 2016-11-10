@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DF12F251DD4D1B8007A8A3E /* Pet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DF12F241DD4D1B8007A8A3E /* Pet.m */; };
 		602CAE411984363700C9FE49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602CAE401984363700C9FE49 /* Foundation.framework */; };
 		602CAE431984363700C9FE49 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602CAE421984363700C9FE49 /* CoreGraphics.framework */; };
 		602CAE451984363700C9FE49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 602CAE441984363700C9FE49 /* UIKit.framework */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1DF12F231DD4D1B8007A8A3E /* Pet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pet.h; sourceTree = "<group>"; };
+		1DF12F241DD4D1B8007A8A3E /* Pet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pet.m; sourceTree = "<group>"; };
 		602CAE3D1984363700C9FE49 /* Phonagotchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phonagotchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		602CAE401984363700C9FE49 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		602CAE421984363700C9FE49 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -126,6 +129,8 @@
 			children = (
 				AFEF852819F082EB00C5C416 /* bucket.png */,
 				AFEF852919F082EB00C5C416 /* apple.png */,
+				1DF12F231DD4D1B8007A8A3E /* Pet.h */,
+				1DF12F241DD4D1B8007A8A3E /* Pet.m */,
 				607C5D311985A13300501387 /* default.png */,
 				607C5D321985A13300501387 /* sleeping.png */,
 				607C5D331985A13300501387 /* grumpy.png */,
@@ -275,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				602CAE571984363800C9FE49 /* LPGViewController.m in Sources */,
+				1DF12F251DD4D1B8007A8A3E /* Pet.m in Sources */,
 				602CAE511984363800C9FE49 /* LPGAppDelegate.m in Sources */,
 				602CAE4D1984363700C9FE49 /* main.m in Sources */,
 			);
