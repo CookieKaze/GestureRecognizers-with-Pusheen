@@ -11,7 +11,8 @@
 typedef enum catMood {
     Bored,
     Grumpy,
-    Sleepy
+    Sleepy,
+    Happy
 } catMood;
 
 @protocol catViewRules <NSObject>
@@ -26,6 +27,7 @@ typedef enum catMood {
 -(void) onPet: (float) magnitude;
 -(void) onStopPet;
 -(void) onFeed;
+-(void) onSleep;
 -(void) updateMood;
 
 -(NSString *) getMood;

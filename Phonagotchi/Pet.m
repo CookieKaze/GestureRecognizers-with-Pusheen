@@ -31,6 +31,10 @@
         case 2:
             newMood = @"Sleepy";
             break;
+        case 3:
+            newMood = @"Happy";
+            break;
+
         default:
             break;
     }
@@ -51,8 +55,13 @@
     [self updateMood];
 }
 
--(void) onFeed {
+-(void) onSleep {
     self.catMood = Sleepy;
+    [self updateMood];
+}
+
+-(void) onFeed {
+    self.catMood = Happy;
     [self updateMood];
 }
 
