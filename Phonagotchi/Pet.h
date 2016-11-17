@@ -23,6 +23,10 @@ typedef enum catMood {
 @property catMood catMood;
 @property id <catViewRules> catViewDelegate;
 
--(NSString *) onPet: (float) magnitude;
+-(void) onPet: (float) magnitude;
+-(void) onStopPet;
+-(void) onFeed;
+-(void) updateMood;
+
 -(NSString *) getMood;
 @end

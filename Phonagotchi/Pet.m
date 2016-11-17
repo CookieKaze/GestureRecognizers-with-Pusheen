@@ -10,9 +10,6 @@
 
 @implementation Pet
 
-
-
-
 - (instancetype)init
 {
     self = [super init];
@@ -40,15 +37,27 @@
     return newMood;
 }
 
--(NSString *) onPet: (float) magnitude {
+-(void) onPet: (float) magnitude {
     if (magnitude > 500) {
         self.catMood = Grumpy;
-        [self.catViewDelegate updateCatMood:[self getMood]];
     }else if (magnitude == 0) {
         self.catMood = Bored;
-        [self.catViewDelegate updateCatMood:[self getMood]];
     }
-    return [self getMood];
+    [self updateMood];
+}
+
+-(void) onStopPet {
+    self.catMood = Bored;
+    [self updateMood];
+}
+
+-(void) onFeed {
+    self.catMood = Sleepy;
+    [self updateMood];
+}
+
+-(void) updateMood {
+    [self.catViewDelegate updateCatMood:[self getMood]];
 }
 
 @end

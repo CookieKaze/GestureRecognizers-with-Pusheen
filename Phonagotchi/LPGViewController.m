@@ -14,7 +14,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *moodLabel;
 @property (strong, nonatomic) UIPanGestureRecognizer * petGestureRecognizer;
 
-
+@property (weak, nonatomic) IBOutlet UIImageView *appleView;
+@property (nonatomic) UIImageView *appleViewNew;
+@property (strong, nonatomic) UIPanGestureRecognizer * panAppleGestureRecognizer;
 
 
 @property (strong, nonatomic) UIPanGestureRecognizer * panGestureRecognizerApple;
@@ -59,34 +61,24 @@
     //Setup Pet Gesture
     self.petGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPet)];
     [self.petImageView addGestureRecognizer:self.petGestureRecognizer];
-    //self.pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onApplePinch)];
-    //[self.basketView addGestureRecognizer:self.pinchGestureRecognizer];
-    
-    
-    
 }
 
 -(void) updateCatMood: (NSString *) newMood {
     self.moodLabel.text = newMood;
-    
 }
 
--(void)onPet {
+-(void) onPet {
     CGPoint velocity = [self.petGestureRecognizer velocityInView:self.view];
     float magnitude = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
-    NSLog(@"%f", magnitude);
-    NSString * petMood = [self.pet onPet:magnitude];
-    
+    [self.pet onPet:magnitude];
     switch (self.petGestureRecognizer.state) {
         case 2:
-            if ([petMood isEqual: @"Grumpy"]) {
+            if (self.pet.catMood == 1) {
                 self.petImageView.image = [UIImage imageNamed:@"grumpy.png"];
-                self.moodLabel.text = petMood;
                 break;
             case 3:
                 self.petImageView.image = [UIImage imageNamed:@"default.png"];
-                self.moodLabel.text = [self.pet onPet: 0];
-                
+                [self.pet onStopPet];
                 break;
             default:
                 break;
@@ -94,66 +86,35 @@
     }
 }
 
-//-(void)onApplePinch {
-//    if (self.pinchGestureRecognizer.state == 3) {
-//        self.apple = [[UIImageView alloc] initWithFrame:CGRectZero];
-//        self.apple.translatesAutoresizingMaskIntoConstraints = NO;
-//        self.apple.image = [UIImage imageNamed:@"apple.png"];
-//        [self.view addSubview: self.apple];
-//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.apple
-//                                                              attribute:NSLayoutAttributeBottom
-//                                                              relatedBy:NSLayoutRelationEqual
-//                                                                 toItem:self.view
-//                                                              attribute:NSLayoutAttributeBottom
-//                                                             multiplier:1
-//                                                               constant:0]];
-//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.apple
-//                                                              attribute:NSLayoutAttributeRight
-//                                                              relatedBy:NSLayoutRelationEqual
-//                                                                 toItem:self.view
-//                                                              attribute:NSLayoutAttributeRight
-//                                                             multiplier:1
-//                                                               constant:-65]];
-//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.apple
-//                                                              attribute:NSLayoutAttributeWidth
-//                                                              relatedBy:NSLayoutRelationEqual
-//                                                                 toItem:nil
-//                                                              attribute:NSLayoutAttributeNotAnAttribute
-//                                                             multiplier:1
-//                                                               constant:35]];
-//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.apple
-//                                                              attribute:NSLayoutAttributeHeight
-//                                                              relatedBy:NSLayoutRelationEqual
-//                                                                 toItem:nil
-//                                                              attribute:NSLayoutAttributeNotAnAttribute
-//                                                             multiplier:1
-//                                                               constant:35]];
-//        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.apple
-//                                                              attribute:NSLayoutAttributeBottom
-//                                                              relatedBy:NSLayoutRelationEqual
-//                                                                 toItem:self.view
-//                                                              attribute:NSLayoutAttributeBottom
-//                                                             multiplier:1
-//                                                               constant:0]];
-//        self.apple.userInteractionEnabled = YES;
-//        self.panGestureRecognizerApple = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onAppleMove)];
-//        [self.apple addGestureRecognizer: self.panGestureRecognizerApple];
-//
-//
-//    }
-//}
-//
-//-(void)onAppleMove{
-//    CGPoint touchLocation = [self.panGestureRecognizerApple locationInView:self.view];
-//    self.apple.center = touchLocation;
-//    //NSLog(@"%@", NSStringFromCGPoint(self.apple.center));
-//    if ( CGRectContainsPoint(self.petImageView.frame, self.apple.center) && (self.panGestureRecognizerApple.state == 3)) {
-//        [self.apple removeFromSuperview];
-//        NSLog(@"He ate it!");
-//    }else if ( CGRectContainsPoint(self.petImageView.frame, self.apple.center) == NO && (self.panGestureRecognizerApple.state == 3)) {
-//        [self.apple removeFromSuperview];
-//        NSLog(@"Ah. The apple fell.");
-//    }
-//
-//}
+- (IBAction)onAppleDrag:(UIPanGestureRecognizer *)sender {
+    self.panAppleGestureRecognizer = sender;
+    //Create Apple
+    if (!self.appleViewNew) {
+        CGRect appleSize = self.appleView.frame;
+        self.appleViewNew = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"apple.png"]];
+        self.appleViewNew.frame = appleSize;
+        [self.view addSubview: self.appleViewNew];
+    }
+    //Move Apple
+    CGPoint touchLocation = [self.panAppleGestureRecognizer locationInView:self.view];
+    self.appleViewNew.center = touchLocation;
+    if ( CGRectContainsPoint(self.petImageView.frame, self.appleViewNew.center) && (self.panAppleGestureRecognizer.state == 3)) {
+        [self.appleViewNew removeFromSuperview];
+        [self.pet onFeed];
+        self.petImageView.image = [UIImage imageNamed:@"sleeping.png"];
+        self.appleViewNew = nil;
+    }else if ( CGRectContainsPoint(self.petImageView.frame, self.appleViewNew.center) == NO && (self.panAppleGestureRecognizer.state == 3)) {
+        
+        [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            self.appleViewNew.frame = CGRectMake(self.appleViewNew.frame.origin.x, self.view.frame.size.height, self.appleViewNew.frame.size.width, self.appleViewNew.frame.size.height);
+            
+        } completion:^(BOOL finished){
+            [self.appleViewNew removeFromSuperview];
+            self.appleViewNew = nil;
+        }];
+    
+    }
+}
+
 @end
