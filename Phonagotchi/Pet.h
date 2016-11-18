@@ -22,6 +22,7 @@ typedef enum catMood {
 @interface Pet : NSObject
 
 @property catMood catMood;
+@property int restfulness;
 @property id <catViewRules> catViewDelegate;
 
 -(void) onPet: (float) magnitude;

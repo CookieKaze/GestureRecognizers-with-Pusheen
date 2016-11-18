@@ -8,6 +8,10 @@
 
 #import "Pet.h"
 
+@interface Pet ()
+@property NSTimer * restTimer;
+@end
+
 @implementation Pet
 
 - (instancetype)init
@@ -15,6 +19,7 @@
     self = [super init];
     if (self) {
         _catMood = Sleepy;
+        _restfulness = 100;
     }
     return self;
 }
@@ -48,6 +53,8 @@
         self.catMood = Bored;
     }
     [self updateMood];
+    [self.restTimer invalidate];
+    self.restTimer =  [NSTimer scheduledTimerWithTimeInterval:0.2f target:self selector:@selector(changeRestfulness:) userInfo:@"decrease" repeats:YES];
 }
 
 -(void) onStopPet {
@@ -58,11 +65,23 @@
 -(void) onSleep {
     self.catMood = Sleepy;
     [self updateMood];
+    [self.restTimer invalidate];
+    self.restTimer =  [NSTimer scheduledTimerWithTimeInterval:0.2f target:self selector:@selector(changeRestfulness:) userInfo:@"increase" repeats:YES];
+}
+
+-(void) changeRestfulness: (NSTimer *) timer {
+    if ([timer.userInfo isEqualToString:@"increase"]) {
+        if (self.restfulness < 100) self.restfulness += 1;
+    }else if  ([timer.userInfo isEqualToString:@"decrease"]) {
+        if (self.restfulness > 0) self.restfulness -= 1;
+    }
 }
 
 -(void) onFeed {
     self.catMood = Happy;
     [self updateMood];
+    [self.restTimer invalidate];
+    self.restTimer =  [NSTimer scheduledTimerWithTimeInterval:0.2f target:self selector:@selector(changeRestfulness:) userInfo:@"decrease" repeats:YES];
 }
 
 -(void) updateMood {

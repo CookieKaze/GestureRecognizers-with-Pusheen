@@ -10,6 +10,8 @@
 #import "Pet.h"
 
 @interface LPGViewController () <catViewRules>
+@property (weak, nonatomic) IBOutlet UIView *restfulnessBar;
+@property (nonatomic) CGFloat restBarWidth;
 @property (nonatomic) UIImageView *petImageView;
 @property (weak, nonatomic) IBOutlet UILabel *moodLabel;
 @property (strong, nonatomic) UIPanGestureRecognizer * petGestureRecognizer;
@@ -25,6 +27,7 @@
 
 @property (nonatomic) NSTimer* sleepTimer;
 @property (nonatomic) NSTimer* boredTimer;
+@property (nonatomic) NSTimer* restTimer;
 @end
 
 @implementation LPGViewController
@@ -63,8 +66,14 @@
     //Setup Pet Gesture
     self.petGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onPet)];
     [self.petImageView addGestureRecognizer:self.petGestureRecognizer];
-    
     self.sleepTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(sleep:) userInfo:nil repeats:YES];
+    [self.pet addObserver:self forKeyPath:@"restfulness" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    self.restBarWidth = self.view.frame.size.width;
+    CGRect restBar = CGRectMake(self.restfulnessBar.frame.origin.x, self.restfulnessBar.frame.origin.y, self.restBarWidth, self.restfulnessBar.frame.size.height);
+    self.restfulnessBar.frame = restBar;
 }
 
 #pragma mark - Pet Interaction
@@ -146,9 +155,23 @@
     self.petImageView.image = [UIImage imageNamed:@"sleeping.png"];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"restfulness"]) {
+        [self updateRestfulnessBar];
+    }
+}
+
 -(void) bored {
     [self.boredTimer invalidate];
     self.petImageView.image = [UIImage imageNamed:@"default.png"];
     [self.pet onStopPet];
 }
+
+-(void) updateRestfulnessBar {
+    CGFloat screenSize = self.view.frame.size.width;
+    self.restBarWidth = screenSize * (float)self.pet.restfulness/100;
+    CGRect restBar = CGRectMake(self.restfulnessBar.frame.origin.x, self.restfulnessBar.frame.origin.y, self.restBarWidth, self.restfulnessBar.frame.size.height);
+    self.restfulnessBar.frame = restBar;
+}
+
 @end

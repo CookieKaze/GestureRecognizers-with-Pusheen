@@ -50,12 +50,34 @@
                                     <outletCollection property="gestureRecognizers" destination="gYI-sd-cTb" appends="YES" id="MqQ-he-vXD"/>
                                 </connections>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rest Level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJz-V8-mvh">
+                                <rect key="frame" x="16" y="42" width="67" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="67" id="QXm-mA-pUP"/>
+                                    <constraint firstAttribute="height" constant="17" id="bw8-UX-qIF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfH-Au-M8X">
+                                <rect key="frame" x="0.0" y="28" width="0.0" height="12"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="aaq-4g-eTx"/>
+                                    <constraint firstAttribute="height" constant="12" id="uHw-4d-w0t"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="bfH-Au-M8X" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="0RN-yz-i0c"/>
+                            <constraint firstItem="RJz-V8-mvh" firstAttribute="top" secondItem="bfH-Au-M8X" secondAttribute="bottom" constant="2" id="5Hf-W5-R67"/>
                             <constraint firstItem="1kp-r3-lTk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-35" id="APC-GT-OJG"/>
+                            <constraint firstItem="bfH-Au-M8X" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="Ive-1o-0mw"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Gly-KB-Y8W" secondAttribute="bottom" constant="15" id="KRz-KT-zZr"/>
+                            <constraint firstItem="RJz-V8-mvh" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="boL-zb-gex"/>
                             <constraint firstItem="Gly-KB-Y8W" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-2" id="hS1-AR-Aq2"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Wpg-Hy-5Mb" secondAttribute="bottom" constant="15" id="iyC-NI-mDS"/>
                             <constraint firstAttribute="bottomMargin" secondItem="1kp-r3-lTk" secondAttribute="bottom" constant="-16" id="pRe-9L-Dar"/>
@@ -65,6 +87,7 @@
                     <connections>
                         <outlet property="appleView" destination="Gly-KB-Y8W" id="TVr-0F-585"/>
                         <outlet property="moodLabel" destination="Wpg-Hy-5Mb" id="gab-Gx-a3V"/>
+                        <outlet property="restfulnessBar" destination="bfH-Au-M8X" id="hsv-AX-KAh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -74,7 +97,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="304" y="348"/>
+            <point key="canvasLocation" x="303.5" y="347.5"/>
         </scene>
     </scenes>
     <resources>
